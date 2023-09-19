@@ -11,10 +11,15 @@ public class Player : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip damageSound;
 
+    public AudioClip coinsSound;
+
+    private int coins;
+
     public void TakeDamage(int damage)
     {
 
         health -= damage;
+        print("Player's health: " + health);
 
         if (health > 0) {
             audioSource.PlayOneShot(damageSound);
@@ -23,6 +28,14 @@ public class Player : MonoBehaviour
             int sceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(sceneIndex);
         }
+    }
+
+    public void CollectCoins()
+    {
+        coins += 1;
+        audioSource.PlayOneShot(coinsSound);
+
+        print("Coins: " + coins);
     }
 
 }
