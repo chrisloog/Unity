@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedTrigger : MonoBehaviour
 {
-   public float speedFactor = 2.5f;
+   public float speedFactor = 4.0f;
 
    void OnTriggerEnter(Collider other) {
         other.GetComponent<FirstPersonMovement>().runSpeed *= speedFactor;
