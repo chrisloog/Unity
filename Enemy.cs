@@ -24,8 +24,9 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.GetComponent<Player>();
+        Health playerHealth = other.GetComponent<Health>();
 
-        player.TakeDamage(playerDamage);
+        playerHealth.TakeDamage(playerDamage);
+
     }
 }
