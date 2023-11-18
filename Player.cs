@@ -5,37 +5,38 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public static int score = 0;
+    public static List<Square> squares;
 
-    private int health = 10;
-
-    public AudioSource audioSource;
-    public AudioClip damageSound;
-
-    public AudioClip coinsSound;
-
-    private int coins;
-
-    public void TakeDamage(int damage)
+    void Awake()
     {
-
-        health -= damage;
-        print("Player's health: " + health);
-
-        if (health > 0) {
-            audioSource.PlayOneShot(damageSound);
-        }
-        else {
-            int sceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(sceneIndex);
-        }
+        squares = new List<Square>();
     }
 
-    public void CollectCoins()
+    public static void Defeat()
     {
-        coins += 1;
-        audioSource.PlayOneShot(coinsSound);
-
-        print("Coins: " + coins);
+        UI.ShowDefeatPanel();
+        score = 0;
     }
+
+    void Update()
+    {
+        if(squares.Count == 0)
+        {
+            Victory();
+        }
+    }
+ 
+	public static void Victory()
+	{
+		UI.ShowVictoryPanel();
+	}
+
+    public static void Restart()
+	{
+		int index = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(index);
+	}
+
 
 }
