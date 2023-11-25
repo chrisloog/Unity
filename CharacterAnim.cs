@@ -22,7 +22,7 @@ public class CharacterAnim : MonoBehaviour
         bool forwardPressed = Input.GetKey("w");
         bool runPressed = Input.GetKey("left shift");
 
-        if (isWalking && forwardPressed)
+        if (!isWalking && forwardPressed)
         {
             animator.SetBool("isWalking", true);
         }
@@ -37,7 +37,7 @@ public class CharacterAnim : MonoBehaviour
             animator.SetBool("isRunning", true);
         }
 
-        if(isRunning && (forwardPressed || runPressed))
+        if(isRunning && (!forwardPressed || !runPressed))
         {
             animator.SetBool("isRunning", false);
         }
