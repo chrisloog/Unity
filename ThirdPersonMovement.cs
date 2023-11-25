@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Third : MonoBehaviour
+public class ThirdPersonMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float runSpeed = 9f;
@@ -15,6 +15,11 @@ public class Third : MonoBehaviour
     void Awake()
     {
         playerRigidbody = this.GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        Cursor.visible = false;
     }
 
     void FixedUpdate()
