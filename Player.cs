@@ -1,42 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public static int score = 0;
-    public static List<Square> squares;
 
-    void Awake()
-    {
-        squares = new List<Square>();
-    }
+    public int points;
 
-    public static void Defeat()
+    void Move()
     {
-        UI.ShowDefeatPanel();
-        score = 0;
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 realPos = Camera.main.ScreenToWorldPoint(mousePos);
+            transform.position = realPos;
+        }
     }
 
     void Update()
     {
-        if(squares.Count == 0)
-        {
-            Victory();
-        }
+        Move();
     }
- 
-	public static void Victory()
-	{
-		UI.ShowVictoryPanel();
-	}
-
-    public static void Restart()
-	{
-		int index = SceneManager.GetActiveScene().buildIndex;
-		SceneManager.LoadScene(index);
-	}
-
-
 }
