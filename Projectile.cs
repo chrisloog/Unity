@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public GameObject explosionEffect;
     public float speed = 10f;
 
     void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 1f);
     }
 
     void Update()
@@ -22,6 +23,8 @@ public class Projectile : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
+            GameObject effect = Instantiate(explosionEffect, transform.position, transform.rotation);
+            Destroy(effect, 5);
         }
     }
 }
