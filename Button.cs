@@ -6,17 +6,16 @@ public class Button : MonoBehaviour
 {
     public Animator button;
     public Animator toOpen;
-
-    // Start is called before the first frame update
+ 
     void Start()
     {
         button.enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
+ 
+    private void OnTriggerEnter(Collider other)
     {
         button.enabled = true;
         toOpen.enabled = true;
     }
 }
+
