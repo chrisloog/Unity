@@ -7,8 +7,6 @@ public class Player : MonoBehaviour
 {
     private int health = 10;
     private int coins;
-    public AudioSource audiosource;
-    public AudioClip damageSound;
 
     public GameObject fireballPrefab;
     public Transform attackPoint;
@@ -16,8 +14,6 @@ public class Player : MonoBehaviour
     public void CollectCoins()
     {
         coins++;
-
-        audioSource.PlayOneShot(collectSound);
 
         print("Collected coins: " + coins);
     }
