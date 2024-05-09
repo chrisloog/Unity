@@ -7,24 +7,17 @@ public class Player : MonoBehaviour
 {
     private int health = 10;
     private int coins;
-    public AudioSource audiosource;
-    public AudioClip damageSound;
 
     public GameObject fireballPrefab;
     public Transform attackPoint;
     
-    //The object responsible for audio playback
     public AudioSource audioSource;
- 
-    //Sound file containing the sound of damage
     public AudioClip damageSound;
 
 
     public void CollectCoins()
     {
         coins++;
-
-        audioSource.PlayOneShot(collectSound);
 
         print("Collected coins: " + coins);
     }
