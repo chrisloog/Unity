@@ -9,6 +9,6 @@ public class SceneChange : MonoBehaviour
     
     void OnTriggerEnter(Collider other) 
     {
-        EditorSceneManager.LoadScene(sceneName)
+        EditorSceneManager.LoadScene(sceneName);
     }
 }
