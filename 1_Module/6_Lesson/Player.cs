@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,17 +10,18 @@ public class Player : MonoBehaviour
 
     //Maximum player Health
     public int maxHealth = 10;
-    private int coins;
+    public int coins;
 
     public GameObject fireballPrefab;
     public Transform attackPoint;
+    
+    public AudioSource audioSource;
+    public AudioClip damageSound;
 
 
     public void CollectCoins()
     {
         coins++;
-
-        audioSource.PlayOneShot(collectSound);
 
         print("Collected coins: " + coins);
     }
