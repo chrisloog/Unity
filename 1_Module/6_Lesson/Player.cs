@@ -16,12 +16,6 @@ public class Player : MonoBehaviour
 
     public GameObject fireballPrefab;
     public Transform attackPoint;
-    
-    //The object responsible for audio playback
-    public AudioSource audioSource;
- 
-    //Sound file containing the sound of damage
-    public AudioClip damageSound;
 
 
     public void CollectCoins()
