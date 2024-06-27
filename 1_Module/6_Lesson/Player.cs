@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
     //Maximum player Health
     public int maxHealth = 10;
     private int coins;
-    public AudioSource audiosource;
-    public AudioClip damageSound;
 
     public GameObject fireballPrefab;
     public Transform attackPoint;
