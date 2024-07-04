@@ -1,29 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
-    public Player player;
-    public TextMeshProUGUI pointsCounterText;
-    public GameObject defeatUI;
+    public CoinsCounter coinsCounter;
+    public Health health;
+    public TextMeshProUGUI coinsCounterText;
+    public Slider healthSlider;
 
-    // Update is called once per frame
     void Update()
     {
-        if (player == null)
-        {
-            defeatUI.SetActive(true);
-        }
-        pointsCounterText.text = player.points.ToString();
+        // Updating the player's health value
+        healthSlider.maxValue = health.maxHealth;
+        healthSlider.value = health.health;
+		
+        // Updating the text with the number of coins
+        coinsCounterText.text = coinsCounter.coins.ToString();
     }
-
-    public void OnClickRestart()
-    {
-        var index = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(index);
-    }
-
 }
