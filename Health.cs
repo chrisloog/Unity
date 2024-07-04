@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    private int health = 10;
-
+    public int health = 10;
+    public int maxHealth = 10;
     public AudioSource audioSource;
     public AudioClip damageSound;
 
     public void TakeDamage(int damage)
     {
-
         health -= damage;
-        print("Player's health: " + health);
 
-        if (health > 0) {
+        if(health > 0)
+        {
             audioSource.PlayOneShot(damageSound);
+            print("Player's health: " + health);
         }
-        else {
+        else
+        {
             int sceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(sceneIndex);
         }
