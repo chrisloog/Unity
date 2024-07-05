@@ -1,0 +1,81 @@
+-- The script is for shooting on the player's side
+
+-- Projectile speed
+local PROJECTILE_SPEED = 80
+local LAUNCH_COOLDOWN = 0.2
+-- Projectile spawn distance relative to ship model
+local PROJECTILE_OFFSET = 5
+-- The key in charge of shooting (space).
+local ATTACK_KEY = Enum.KeyCode.Space
+
+-- Variables for Roblox services
+local ContextActionService = game:GetService("ContextActionService")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Variables for RemoteEvents and Functions
+local launchProjectile = ReplicatedStorage:WaitForChild("LaunchProjectile")
+local destroyProjectile = ReplicatedStorage:WaitForChild("DestroyProjectile")
+local destroyEnemy = ReplicatedStorage:WaitForChild("DestroyEnemy")
+local pingChecker = ReplicatedStorage:WaitForChild("Ping")
+
+-- Variable for the projectile
+local projectileTemplate = ReplicatedStorage:WaitForChild("Projectile")
+-- Variable for the local player
+local player = Players.LocalPlayer
+
+local canLaunch = true
+
+-- Projectile launch function
+local function onLaunch()
+	-- If the character is in the game, cooldown is over, the character is on the field then
+	if player.Character and canLaunch and player.Character.Parent == workspace then
+		-- Reset cooldown
+		canLaunch = false
+		spawn(function()
+			wait(LAUNCH_COOLDOWN)
+			canLaunch = true
+		end)
+
+		-- Creating a projectile clone
+		local projectile = projectileTemplate:Clone()
+		-- Getting the spatial matrix of the ship
+		local playerCFrame = player.Character.PrimaryPart.CFrame
+			local direction = playerCFrame.LookVector * Vector3.new(-1,1,-1)
+			projectile.Position = playerCFrame.Position + direction * PROJECTILE_OFFSET
+			-- Set the velocity vector of the projectile
+			projectile.Velocity = direction * PROJECTILE_SPEED
+
+			-- Adding counterforce (F = m*g) so that the projectile levitates over the surface
+			local mass = projectile:GetMass()
+			projectile.VectorForce.Force = Vector3.new(0, 1, 0) * mass * game.Workspace.Gravity
+
+			-- Moving the projectile to the game field
+			projectile.Parent = game.Workspace
+
+			-- Passing information to the server to create a copy of the projectile and display it on the screen
+			local serverProjectile = launchProjectile:InvokeServer(projectile.Position, projectile.Velocity)
+			-- Hiding the projectile copy on the server from the player
+			serverProjectile.LocalTransparencyModifier = 1
+
+			-- "Connecting" the touch function with the projectile
+			projectile.Touched:Connect(function(other)
+				-- Checking collision with EnemyShip and walls
+				if other.Name == "EnemyShip" or other.Name == "Wall" then
+				-- If there was a collision, delete the projectile from the player and on the server
+				projectile:Destroy()
+				destroyProjectile:FireServer(serverProjectile)
+
+				-- If the projectile hit the enemy, delete this object too
+				if other.Name == "EnemyShip" then
+					destroyEnemy:FireServer(other)
+					other:Destroy()
+				end
+			end
+	end)
+		end
+		end
+
+		pingChecker.OnClientInvoke = function() end
+
+	ContextActionService:BindAction("Launch", onLaunch, false, ATTACK_KEY)
