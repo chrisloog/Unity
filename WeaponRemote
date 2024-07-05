@@ -1,0 +1,20 @@
+--Place in ServerScriptService
+--Configuring events for WeaponHandler (client) and WeaponLauncher (server)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local launchProjectile = Instance.new("RemoteFunction")
+launchProjectile.Name = "LaunchProjectile"
+launchProjectile.Parent = ReplicatedStorage
+
+local pingChecker = Instance.new("RemoteFunction")
+pingChecker.Name = "Ping"
+pingChecker.Parent = ReplicatedStorage
+
+local destroyEnemy = Instance.new("RemoteEvent")
+destroyEnemy.Name = "DestroyEnemy"
+destroyEnemy.Parent = ReplicatedStorage
+
+local destroyProjectile = Instance.new("RemoteEvent")
+destroyProjectile.Name = "DestroyProjectile"
+destroyProjectile.Parent = ReplicatedStorage

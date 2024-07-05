@@ -1,27 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
     public int minutes = 0;
     public int seconds = 0;
+    public TextMeshProUGUI timerText;
+    private float timer;
+
+    void Start()
+    {
+        UpdateTimerText();
+    }
 
     void Update()
     {
-        seconds += Mathf.RoundToInt(Time.deltaTime);
+        timer += Time.deltaTime;
 
-        if (seconds >= 60)
+        if (timer >= 1f)
         {
-            seconds -= 60;
-            minutes--;
+            timer = 0f;
+            seconds--;
+
+            if (seconds < 0)
+            {
+                seconds = 59;
+                minutes--;
+            }
 
             if (minutes < 0)
             {
                 int sceneIndex = SceneManager.GetActiveScene().buildIndex;
                 SceneManager.LoadScene(sceneIndex);
             }
+            else
+            {
+                UpdateTimerText();
+            }
         }
+    }
+
+    void UpdateTimerText()
+    {
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

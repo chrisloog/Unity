@@ -1,0 +1,24 @@
+-- Respawn duration after collision
+local RESPAWN_DURATION = 3
+
+local ServerStorage = game:GetService("ServerStorage")
+
+local function onTouched(other)
+	if other.Name == "HumanoidRootPart" or other.Name == "Cannon" then
+		-- removing the player from ReplicatedStorage
+		local character = other.Parent
+		character.Parent = game:GetService("ReplicatedStorage")
+
+		local explosion = Instance.new("Explosion", workspace)
+		explosion.Position = character:GetPrimaryPartCFrame().p
+		-- Waiting for three seconds
+		wait(RESPAWN_DURATION)
+		
+		-- Returning the player back
+		character.Parent = workspace
+		character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+		character.HumanoidRootPart.VectorForce.Force = Vector3.new(0,0,0)
+	end
+end
+
+script.Parent.Touched:Connect(onTouched)
