@@ -38,7 +38,7 @@ public class UI : MonoBehaviour
 
     public void OnClickRestart()
 	{
-		Player.Restart();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 }
