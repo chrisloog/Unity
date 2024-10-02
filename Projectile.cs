@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 
+    public GameObject explosion;
     public float speed = 10f;
 
     void Start()
@@ -22,6 +23,8 @@ public class Projectile : MonoBehaviour
         if(collision.tag == "Obstacle")
         {
             Destroy(collision.gameObject);
+            GameObject effect = Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(effect, 5);
             Destroy(this.gameObject);
         }
     }
